@@ -1,0 +1,236 @@
+* Deuda Tecnica:
+
+    - Falta de calidad de algun aspecto del codigo
+    - Falta de documentacion, pruebas, refactorizacion
+    - Nosotros estamos conscientes que debemos pagarla luego
+    - Repercutira en costos futuros como economicos
+    - Es normal e inevitable caer en esta deuda
+    - Debemos preocuparnos por pagar esta deuda tecnica
+    - CUADRANTES
+
+        - IMPRUDENTE:
+            Se actua de forma consciente consciente
+            No hay tiempo, hay que terminarlo como sea
+
+        - INADVERTIDA
+            Mas peligrosa
+            Desarrollador de perfil sin experiencia
+            No tienes patrones de diseño
+
+        - PRUDENTE
+            Se actua conscientemente
+            Sabemos que la deuda existe
+            Poner mensajes de TODO, luego lo hacemos porque no hay tiempo
+
+        - PRUDENTE E INADVERTIDA
+            Ahora nos dimos cuenta que esta fue la mejor forma de hacerlo
+            Considerar de volverlo a hacer de otra manera
+
+* ¿Cómo se paga la deuda técnica?
+
+    Refactorizando nuestro codigo
+    Simple proceso para mejorar el codigo sin alterar el comportamiento
+    DEBEMOS TENER PRUEBAS AUTOMATICAS
+    "Si funciona, no lo toques"
+        => Caemos en eso porque no tenemos una forma ordenada de programar
+        => Usualmente cuando lo hizo otra persona
+
+* Clean Code
+
+    Es un codigo que se realizo para lo entiendan todos
+    Se debe leer el codigo con la misma facilidad que lees un libro escrito
+    Programar es decirle a otro humano lo que quieres que la PC haga
+    Que el codigo sea muy facil de entender y leer
+
+* Nombres de variables
+
+    Sin guiones bajos, en la mayoria de lenguajes
+
+        MAL                   | BIEN
+        const n = 53;           const numberOfUnits = 53
+        const tx = 0.15;        const tax = 0.15;
+        const cat = "T-Shirts"  const category = "T-Shirts" 
+
+    Ausencia de informacion tecnica en los Nombres
+
+        MAL                           | BIEN
+        class AbsctractUser             class User
+        class UserMixin                 interface User
+        class Implementation
+        interface UserInterface
+
+    * Mirar src/clean-code/01-names.ts
+    * Mirar src/clean-code/02-name-types.ts
+
+* Nombres para funciones
+
+    - No deben ser tan largos
+    - Dene llamarse verbo + sustantivo
+    - Deben hacer exactamente lo que dicen en el nombre
+    - Como maximo 3 parametros
+    - PARAMETROS => las variables que tiene una funcion
+        - Agregar de manera alfabetica
+    - ARGUMENTOS => cuando usamos la funcion y le pasamos variables
+    - Simplicidad
+    - Debe tener tamaño reducido
+    - Usar funciones de una sola linea sin complicarnos
+    - Menos de 20 lineas de codigo
+    - Evitar uso del else
+    - Condicional ternaria
+
+* Principio DRY - DON'T REPETAR YOURSELF
+
+    - Evitar duplicidad en el codigo muchas veces en diferentes lugares
+    - Simplifica las pruebas
+    - Ayuda a centralizar los procesos
+    - Refactorizacion del codigo 
+
+++ PRINCIPIOS STUPID ==> PARA EVITAR "CODE SMELL"
+
+    S-ingleton
+
+        - PRO: Una sola instancia en un ambito global
+        - CONTRAS: 
+            => cualquiera lo puede modificar
+            => dificil de testear
+
+    T-ight Coupling: Alto acoplamiento y baja cohesion
+
+        - Un cambio va a afectar muchos modulos
+        - Es dificil de reutilizar
+        - La clase hace mas de lo que realmente fue creada
+        - La clase solamente deberia dedicarse a algo especifico
+        - En alto acoplamiento, las clases estan muy unidas,
+            se necesita cambiar muchas cosas cuando haya un cambio
+        - Mira code-smells/02-*
+
+    U-ntestability: Codigo dificilmente testeable
+
+        - Cuando hay muchas dependencias en el codigo
+        - Codigo con alto acoplamiento
+
+    P-remature Optimization: optimizaciones prematuras
+
+        - No desarrollar optimizaciones antes de conversar
+            con el cliente, dar complejidad innecesaria al py
+        - COMPLEJIDAD ACCIDENTAL: Solucion compleja a algo no conplejo
+        - COMPLEJIDAD ESCENCIAL: Complejidad inherente al problema
+
+    I-ndescriptive Naming: Poner nombres poco descriptivos
+
+    D-uplication: duplicidad de codigo, basicamene principios DRY
+
+        } REAL:
+            Codigo identico, cambiar todo el todos los puntos repetibles
+
+        } ACCIDENTAL:
+            Codigo similar, pero con funciones distintas
+            Hay que cambiar un solo lugar en actualizacion
+            Cambios con parametros y optimizaciones
+        
+++ OTROS CODE SMELLS
+
+    - Un metodo contiene muchisimas lineas de codigo
+        * Delegar el metodo en submetodos especificos
+    
+    - Clases demasiado grandes
+        * Igual, submetodos
+
+    - Obsesion primitiva
+        * Uso de muchisimas constantes para uso de matrices de datos
+        * Uso de variables de entorno
+    
+    - Lista larga de parametros
+        * Uso de muchos argumentos en un metodo
+        * Debemos comporbar que los argumentos son netamente necesarios
+
+++ CODE SMELLS PARA ALTO ACOPLAMENTO
+
+    - FEATURE ENVY: Envidia de caracteristicas
+        * Cuando la clase llama mas cosas de otra clase que ella misma
+        * Si las cosas cambian, debemos mantenerlas en el mismo lugar
+
+    - Intimidad inapropiada:
+        * Una clase usa muchas cosas de otra clase, parecido al anterior
+        * Las clases deben saber lo minimo de otras clases
+        * Separar clas clases
+
+    - Cadena de mensajes:
+        * Una funcion A llama a B, B llama a C, C llama a D
+        * Un mensaje pasa por muchos objetos
+        * Evaluar si eliminamos comunicaciones innecesarias
+
+    - The Middle Man: Hombre intermedio
+        * Una clase que se encarga de delegar tarea a otra clase
+        * Debemos evitar usar clases que solo delegan a otra, eliminarlas
+
+
++++++++++++++++++++
+
+Los 5 principios S.O.L.I.D. de diseño de software son:
+
+    => S – Single Responsibility Principle (SRP)
+
+        - Nunca deberia haber mas de un motivo por el cual
+            cambiar una clase o un modulo
+        - No quiere decir que debe hacer una sola cosa
+
+        - Deteccion:
+            * Nombres de clases y modulos deasiado genericos
+            * Cambios suelen afectar muchas clases o modulos
+            * La clase tiene muchas responsabilidades
+            * Muchas importaciones
+            * Muchos metodos publicos
+            * Muchas lineas de codigo
+
+    => O – Open/Closed Principle (OCP)
+
+        - Entidades de sw deben ser abiertas para extension
+            cerradas para modificacion. Ejm:
+            * Escribimos en un archivo txt
+            * Cambiar de nombre al archivo fisicamente - VIOLACION
+            * Solamente crear una funcion con toleracion al cambio con
+                parametros
+            * Cuando quitamos una dependencia y hay cientos
+                de clases afectadas
+
+        - Deteccion:
+            * Cambios afectan muchas clases o modulos
+            * Clase o modulo afecta muchas capas
+                (presentacion, almacenamiento)
+
+
+    => L – Liskov Substitution Principle (LSP)
+
+        - Gracias a la doctora Barbara Jane Huberman, Barbara Liskov
+        - Recibio el premio de Turing en 2008, en informatica
+            por sus contribuciones a la abstraccion de datos y 
+            tolerancia a fallas
+        - Las clases se manejan por PARAMETROS, sin alterar
+            funcionamiento
+        - Usar metodos abstractos, en herencia
+
+    => I – Interface Segregation Principle (ISP)
+
+        - Los clientes no estan obligados a depender de interfaces
+            que no usan
+        - Las funciones estan obligadas a usar metodos que no usan
+
+        - Deteccion:
+            * Si las interfaces nos obligan a usar metodos que no se usan
+
+    => D – Dependency Inversion Principle (DIP)
+
+        - Modulos de altno nivel no dependen de modulos de bajo nivel
+            Ejm: Frontend dicta regals de negocio
+        - Ambos deben depender de abstracciones
+            * Aumenta la tolerancia al cambio
+        - Las abstracciones no deben depender de detalles
+        - Detalles dependen de abstracciones
+        - Ejm: Si queremos migrar de una base de datos a otra, si tenemos todo
+            la capa de base de datos, sera sencillo y adaptable
+        - Ejm: Cambio de JSON a XML
+        - Este es el core: depender de ABSTRACCIONES
+        
+    * Solo son RECOMENDACIONES
+    
